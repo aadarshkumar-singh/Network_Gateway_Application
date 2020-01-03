@@ -12,6 +12,8 @@
 #define CRINGBUFFER_H
 
 #include "global.h"
+#include <iostream>
+using namespace std;
 
 class CRingBuffer {
 private:
@@ -24,12 +26,16 @@ public:
 
     CRingBuffer(uint16_t size = 10);
     ~CRingBuffer();
-
+    friend ostream& operator <<(ostream &lhs , const CRingBuffer& rhs);
     RC_t read(uint8_t& data);
+    uint16_t getFillLevelOfBuffer();
     RC_t write(uint8_t data);
     RC_t clear();
 
 };
+
+ostream& operator <<(ostream &lhs , const CRingBuffer& rhs);
+
 /********************
 **  CLASS END
 *********************/

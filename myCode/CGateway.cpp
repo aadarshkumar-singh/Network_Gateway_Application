@@ -16,6 +16,7 @@ CGateway::CGateway(CPort &portA, CPort &portB)
 	m_portA = &portA;
 	m_portB = &portB;
 }
+
 RC_t CGateway::transmitFromAToB()
 {
 

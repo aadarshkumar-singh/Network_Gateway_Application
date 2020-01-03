@@ -15,7 +15,9 @@
 #include "CRingBuffer.h"
 #include <string>
 
-class CPort {
+class CPort
+{
+
 protected:
     /**@link aggregationByValue
      * @supplierCardinality 1*/
@@ -79,15 +81,17 @@ private:
     virtual RC_t writeByte_hw(uint8_t data) = 0;
 
     /**
-     * \brief Receive one Byte from the hardware
-     *
-     * \param uint8_t& data	: OUT	Byte received
-     * \return RC_t:
-     * 		 RC_SUCCESS - byte was received
-     * 		 Device specific ErrorCode - in case of error
-     */
-    virtual RC_t readByte_hw(uint8_t& data) = 0;
-
+    * \brief Receive one Package from the hardware
+    *
+    * RC_SUCCESS - byte was received
+    * Device specific ErrorCode - in case of error
+    */
+    virtual RC_t readPackage_hw(CRingBuffer& data) = 0;
+    /**
+    * Get the size of a package for the peripheral
+    * \return packagesize in byte
+    */
+    virtual uint16_t getDriverPackageSize() = 0;
 
 };
 /********************

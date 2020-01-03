@@ -13,6 +13,7 @@
 
 //System Include Files
 #include <iostream>
+#include <ostream>
 using namespace std;
 
 //Own Include Files
@@ -75,6 +76,15 @@ RC_t CRingBuffer::write(uint8_t data)
 	}
 }
 
+ostream& operator <<(ostream &lhs, const CRingBuffer &rhs)
+{
+	for (uint16_t index =0 ; index < rhs.m_size; index++)
+	{
+		lhs << rhs.m_pBuffer[index];
+	}
+	return lhs;
+}
+
 RC_t CRingBuffer::clear()
 {
 	m_fillLevel = 0;
@@ -82,4 +92,9 @@ RC_t CRingBuffer::clear()
 	m_writeIdx = 0;
 
 	return RC_SUCCESS;
+}
+
+uint16_t CRingBuffer::getFillLevelOfBuffer()
+{
+	return m_fillLevel ;
 }

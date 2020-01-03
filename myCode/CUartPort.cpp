@@ -18,6 +18,7 @@ using namespace std;
 #include "CUartPort.h"
 #include "CRingBuffer.h"
 
+#define UART_PACKETSIZE 1
 //Method Implementations
 
 
@@ -34,18 +35,27 @@ RC_t CUartPort::writeByte_hw(uint8_t data)
 	return RC_SUCCESS;
 }
 
-RC_t CUartPort::readByte_hw(uint8_t &data)
+RC_t CUartPort::readPackage_hw(CRingBuffer& dataReadFromHw)
 {
 	static uint8_t fakeData = 'a';
 	static uint16_t counter = 0;
 
-	counter++;
+	if (counter >= UART_DEFAULTBUFFERSIZE)
+		return RC_NODATA;
 
-	if (counter >= 20) return RC_NODATA;
+	while(dataReadFromHw.write(fakeData) == RC_SUCCESS)
+	{
+		++fakeData;
+		++counter;
+	}
 
-	data = fakeData++;
-
-	cout << "Just read from UART hardware: " << data << endl;
+	cout << "Just read from UART hardware: " << dataReadFromHw << endl;
 
 	return RC_SUCCESS;
+
+}
+
+uint16_t CUartPort::getDriverPackageSize()
+{
+	return (UART_PACKETSIZE);
 }

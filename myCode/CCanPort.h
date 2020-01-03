@@ -64,18 +64,19 @@ private:
      */
     RC_t writeByte_hw(uint8_t data);
 
-    /**
-     * \brief Receive one Byte from the hardware
-     *
-     * Receive one Byte from the hardware.
-     * \note The function is non-blocking. In case the hardware is empty, an error code will be returned.
-     *       Therefore the function preferably should be called through an ISR
-     * \param uint8_t& data	: OUT	Byte received
-     * \return RC_t:
-     * 		 RC_SUCCESS - byte was received
-     * 		 RC_NODATA - peripheral was empty, no data was received, must be re-queried
-     */
-    RC_t readByte_hw(uint8_t& data);
+	/**
+	 * \brief Receive one Package from the hardware
+	 *
+	 * RC_SUCCESS - byte was received
+	 * Device specific ErrorCode - in case of error
+	 */
+	RC_t readPackage_hw(CRingBuffer& dataReadFromHw);
+
+	/**
+	 * Get the size of a package for the peripheral
+	 * \return packagesize in byte
+	 */
+	uint16_t getDriverPackageSize();
 };
 
 #endif /* CCANPORT_H */

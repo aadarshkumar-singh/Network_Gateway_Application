@@ -88,14 +88,21 @@ RC_t CPort::portRx_isr()
 {
 	//Todo: real error handling to be added later
 	RC_t result = RC_ERROR;
+	uint8_t data = 0;
+	CRingBuffer dataReadFromHw(getDriverPackageSize());
+	uint16_t packageFillLevel = 0;
 	do
 	{
-		uint8_t data = 0;
+		result = readPackage_hw(dataReadFromHw);
+		packageFillLevel = dataReadFromHw.getFillLevelOfBuffer();
 
-		result = readByte_hw(data);
 		if (RC_SUCCESS == result)
 		{
-			m_ringBufferRx.write(data);
+			for (int index = 0; index<packageFillLevel;index++)
+			{
+				dataReadFromHw.read(data);
+				m_ringBufferRx.write(data);
+			}
 		}
 
 	} while (RC_SUCCESS == result);
