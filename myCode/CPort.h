@@ -71,15 +71,13 @@ public:
 private:
 
     /**
-     * \brief Sends one Byte to the hardware
-     *
-     * \param uint8_t data	: IN	Byte to be transmitted
-     * \return RC_t:
-     * 		 RC_SUCCESS - byte was transmitted
-     * 		 Device specific ErrorCode - in case of error
-     */
-    virtual RC_t writeByte_hw(uint8_t data) = 0;
-
+    * \brief Sends one Package to the hardware
+    *
+    * \return RC_t:
+    * RC_SUCCESS - byte was transmitted
+    * Device specific ErrorCode - in case of error
+    */
+    virtual RC_t writePackage_hw(CRingBuffer data) = 0;
     /**
     * \brief Receive one Package from the hardware
     *

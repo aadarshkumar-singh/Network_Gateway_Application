@@ -91,6 +91,9 @@ RC_t CRingBuffer::clear()
 	m_readIdx = 0;
 	m_writeIdx = 0;
 
+	for(int i =0;i<m_size;i++)
+		m_pBuffer[i]='\0';
+
 	return RC_SUCCESS;
 }
 

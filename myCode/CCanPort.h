@@ -51,18 +51,15 @@ public:
 			 );
 
 private:
-    /**
-     * \brief Sends one Byte to the hardware
-     *
-     * Sends one Byte to the hardware.
-     * \note The function is non-blocking. In case the hardware is occupied, an error code will be returned.
-     *       Therefore the function preferably should be called through an ISR
-     * \param uint8_t data	: IN	Byte to be transmitted
-     * \return RC_t:
-     * 		 RC_SUCCESS - byte was transmitted
-     * 		 RC_PERIPHERALOCCUPIED - peripheral was occupied, no data was transmitted, must be re-send
-     */
-    RC_t writeByte_hw(uint8_t data);
+
+	/**
+	 * \brief Sends one Package to the hardware
+	 *
+	 * \return RC_t:
+	 * RC_SUCCESS - byte was transmitted
+	 * Device specific ErrorCode - in case of error
+	 */
+	RC_t writePackage_hw(CRingBuffer data);
 
 	/**
 	 * \brief Receive one Package from the hardware

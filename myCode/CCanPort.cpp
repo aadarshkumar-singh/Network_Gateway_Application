@@ -10,7 +10,8 @@ using namespace std;
 CCanPort::CCanPort(port_t port, uint32_t baudrate, uint16_t bufferSizeRx, uint16_t bufferSizeTx) : CPort(bufferSizeTx, bufferSizeRx)
 {
 }
-RC_t CCanPort::writeByte_hw(uint8_t data)
+
+RC_t CCanPort::writePackage_hw(CRingBuffer data)
 {
 	cout << "Just wrote to CAN hardware: " << data << endl;
 	return RC_SUCCESS;

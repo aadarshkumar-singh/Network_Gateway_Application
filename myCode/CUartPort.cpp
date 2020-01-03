@@ -29,7 +29,7 @@ CUartPort::CUartPort(port_t port, uint32_t baudrate, uint8_t bits,
 {
 }
 
-RC_t CUartPort::writeByte_hw(uint8_t data)
+RC_t CUartPort::writePackage_hw(CRingBuffer data)
 {
 	cout << "Just wrote to UART hardware: " << data << endl;
 	return RC_SUCCESS;

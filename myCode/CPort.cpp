@@ -70,15 +70,30 @@ RC_t CPort::readByteStream(string &data)
 RC_t CPort::portTx_isr()
 {
 	RC_t result = RC_ERROR;
+	uint16_t packageSize = getDriverPackageSize();
+	CRingBuffer dataWriteToHw(packageSize);
+	//uint16_t packageFillLevel = 0;
 	do
 	{
 		uint8_t data = 0;
 		result = m_ringBufferTx.read(data);
 		if (RC_SUCCESS == result)
 		{
-			writeByte_hw(data);
+			dataWriteToHw.write(data);
+			if (dataWriteToHw.getFillLevelOfBuffer()== packageSize)
+			{
+				writePackage_hw(dataWriteToHw);
+				dataWriteToHw.clear();
+			}
+		}
+		else
+		{
+			if(dataWriteToHw.getFillLevelOfBuffer()>0)
+				writePackage_hw(dataWriteToHw);
 		}
 	} while (RC_SUCCESS == result);
+
+
 
 	//Todo: real error handling to be added later
 	return RC_SUCCESS;
@@ -98,7 +113,7 @@ RC_t CPort::portRx_isr()
 
 		if (RC_SUCCESS == result)
 		{
-			for (int index = 0; index<packageFillLevel;index++)
+			for (uint16_t index = 0; index<packageFillLevel;index++)
 			{
 				dataReadFromHw.read(data);
 				m_ringBufferRx.write(data);
