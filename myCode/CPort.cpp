@@ -36,7 +36,8 @@ RC_t CPort::writeByteStream(string const& data)
 	{
 		result = m_ringBufferTx.write(data[i]);
 
-		if (RC_SUCCESS != result) return RC_ERROR;
+		if (RC_SUCCESS != result)
+			return RC_ERROR;
 	}
 
 	//Fire TX interrupt
@@ -117,6 +118,18 @@ RC_t CPort::portRx_isr()
 			{
 				dataReadFromHw.read(data);
 				m_ringBufferRx.write(data);
+			}
+		}
+		else
+		{
+			// If data to be read is over , we check if last packet is read or not
+			if(packageFillLevel > 0)
+			{
+				for (uint16_t index = 0; index<packageFillLevel;index++)
+				{
+					dataReadFromHw.read(data);
+					m_ringBufferRx.write(data);
+				}
 			}
 		}
 

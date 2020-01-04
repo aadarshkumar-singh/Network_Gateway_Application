@@ -22,18 +22,19 @@ RC_t CCanPort::readPackage_hw(CRingBuffer& dataReadFromHw)
 {
 	static uint8_t fakeData = 'a';
 	static uint16_t counter = 0;
-	RC_t errCode = RC_SUCCESS;
 
+	dataReadFromHw.clear();
 
-
-	if (counter >= CAN_DEFAULTBUFFERSIZE)
-		return RC_NODATA;
-
-	do
+	while(dataReadFromHw.write(fakeData) == RC_SUCCESS)
 	{
-		errCode = dataReadFromHw.write(fakeData++);
-		counter++;
-	}while(errCode == RC_SUCCESS );
+		++fakeData;
+		++counter;
+		if (counter >= 20)
+		{
+			cout << "Just read from CAN hardware: " << dataReadFromHw << endl;
+			return RC_NODATA;
+		}
+	}
 
 	cout << "Just read from CAN hardware: " << dataReadFromHw << endl;
 

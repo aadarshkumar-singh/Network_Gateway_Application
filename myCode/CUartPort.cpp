@@ -40,17 +40,19 @@ RC_t CUartPort::readPackage_hw(CRingBuffer& dataReadFromHw)
 	static uint8_t fakeData = 'a';
 	static uint16_t counter = 0;
 
-	if (counter >= UART_DEFAULTBUFFERSIZE)
-		return RC_NODATA;
-
+	dataReadFromHw.clear();
 	while(dataReadFromHw.write(fakeData) == RC_SUCCESS)
 	{
 		++fakeData;
 		++counter;
+		if (counter >= 20)
+		{
+			cout << "Just read from UART hardware: " << dataReadFromHw << endl;
+			return RC_NODATA;
+		}
 	}
 
 	cout << "Just read from UART hardware: " << dataReadFromHw << endl;
-
 	return RC_SUCCESS;
 
 }
