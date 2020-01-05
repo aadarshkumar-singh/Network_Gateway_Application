@@ -18,6 +18,7 @@
 class CRingBuffer;
 
 #define CAN_DEFAULTBUFFERSIZE 64
+#define PORT_CANNMAX 2
 
 class CCanPort : public CPort {
 

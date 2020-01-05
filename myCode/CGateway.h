@@ -11,23 +11,26 @@
 #include "global.h"
 #include "CPort.h"
 #include "CPortFactory.h"
-
+#include "CentralErrorHandler.h"
 
 class CGateway
 {
 private:
 	CPort* m_portA;
 	CPort* m_portB;
+	CentralErrorHandler m_errorHandler ;
 public:
 	/**
 	 * Constructor taking explicit port objects
 	 */
-	CGateway(CPort& portA, CPort& portB);
+	CGateway(CPort& portA, CPort& portB,CentralErrorHandler errorHandler);
 
 	/**
 	 * Contructor, using the default factory settings
 	 */
-	CGateway(CPortFactory::port_t portA,  CPortFactory::port_t portB);
+	CGateway(CPortFactory::port_t portA,  CPortFactory::port_t portB,CentralErrorHandler errorHandler);
+
+	CGateway(CPort *portA,  CPort* portB , CentralErrorHandler errorHandler);
 
 	RC_t transmitFromAToB();
 

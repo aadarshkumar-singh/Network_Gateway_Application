@@ -16,17 +16,17 @@
 #include "CRingbuffer.h"
 
 #define UART_DEFAULTBUFFERSIZE 20
+#define PORT_ASCLINMAX 4
 
 class CUartPort : public CPort {
 
 public:
 
     enum port_t{
-    	ASCLIN1,		/**< \brief ASCLIN Port 1, per default mapped to USB bridge */
+    	ASCLIN1 = 1 ,	/**< \brief ASCLIN Port 1, per default mapped to USB bridge */
 		ASCLIN2, 		/**< \brief ASCLIN Port 2, can be mapped to PIN P12(0),PIN P12(2) */
 		ASCLIN3, 		/**< \brief ASCLIN Port 3, can be mapped to PIN P12(3),PIN P12(4) */
 		ASCLIN4, 		/**< \brief ASCLIN Port 4, can be mapped to PIN P12(1),PIN P12(5) */
-		ASCLIN5, 		/**< \brief ASCLIN Port 5, can be mapped to PIN P12(6) */
 		NONE,			/**< \brief default value no valid port */
     };
 

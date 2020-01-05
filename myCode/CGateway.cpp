@@ -11,7 +11,8 @@
 #include "CPort.h"
 using namespace std;
 
-CGateway::CGateway(CPort &portA, CPort &portB)
+CGateway::CGateway(CPort &portA, CPort &portB,CentralErrorHandler errorHandler):
+		m_errorHandler(errorHandler)
 {
 	m_portA = &portA;
 	m_portB = &portB;
@@ -40,13 +41,31 @@ RC_t CGateway::transmitFromAToB()
 	return result;
 }
 
-CGateway::CGateway(CPortFactory::port_t portA, CPortFactory::port_t portB)
+CGateway::CGateway(CPortFactory::port_t portA, CPortFactory::port_t portB,CentralErrorHandler errorHandler):
+		m_errorHandler(errorHandler)
 {
 	m_portA = CPortFactory::createPort(portA);
 	m_portB = CPortFactory::createPort(portB);
 
+	if (m_portA == NULL || m_portB ==NULL)
+	{
+		errorHandler.report(CEH_MAXIMUMLIMITOFPORTREACHED);
+	}
 	//Simulate reception of data
 	m_portA->portRx_isr();
+}
+
+CGateway::CGateway(CPort *portA, CPort *portB,CentralErrorHandler errorHandler):
+		m_errorHandler(errorHandler)
+{
+	if (portA == NULL || portB == NULL)
+	{
+		errorHandler.report(CEH_MAXIMUMLIMITOFPORTREACHED);
+	}
+
+	m_portA = portA;
+	m_portB = portB;
+
 }
 
 CGateway::~CGateway()

@@ -19,19 +19,38 @@
 
 //Method Implementations
 
-
+int CPortFactory::countUartPort = 0;
+int CPortFactory::countCanPort = 0;
 
 CPort* CPortFactory::createCanPort(CCanPort::port_t port,
 		uint32_t baudrate, uint16_t bufferSizeRx, uint16_t bufferSizeTx)
 {
-	return new CCanPort(port, baudrate,bufferSizeRx, bufferSizeTx);
+	if (countCanPort < PORT_CANNMAX)
+	{
+		countCanPort++;
+		return new CCanPort(port, baudrate,bufferSizeRx, bufferSizeTx);
+
+	}
+	else
+	{
+		return NULL;
+	}
 }
 
 CPort* CPortFactory::createUartPort(CUartPort::port_t port,
 		uint32_t baudrate, uint8_t bits, CUartPort::parity_t parity,
 		uint8_t stopbits, uint16_t bufferSizeRx, uint16_t bufferSizeTx)
 {
-	return new CUartPort(port, baudrate, bits, parity,stopbits, bufferSizeRx, bufferSizeTx);
+	if (countUartPort < PORT_CANNMAX)
+	{
+		countUartPort++;
+		return new CUartPort(port, baudrate, bits, parity,stopbits, bufferSizeRx, bufferSizeTx);
+	}
+	else
+	{
+		return NULL;
+	}
+
 }
 
 CPort* CPortFactory::createPort(port_t port)
