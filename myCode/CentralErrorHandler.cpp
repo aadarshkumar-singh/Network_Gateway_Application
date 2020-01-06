@@ -56,3 +56,15 @@ RC_t CentralErrorHandler::report(CEH_source_t err)
 
 	return RC_SUCCESS;
 }
+
+void CentralErrorHandler::terminateWarning()
+{
+	std::cerr<< "No termination - program continues"<<std::endl;
+}
+
+void CentralErrorHandler::terminateError()
+{
+	std::cerr << "Hard termination"<<std::endl;
+	std::terminate();
+}
+

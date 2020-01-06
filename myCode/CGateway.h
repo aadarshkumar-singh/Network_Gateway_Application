@@ -18,19 +18,16 @@ class CGateway
 private:
 	CPort* m_portA;
 	CPort* m_portB;
-	CentralErrorHandler m_errorHandler ;
-public:
-	/**
-	 * Constructor taking explicit port objects
-	 */
-	CGateway(CPort& portA, CPort& portB,CentralErrorHandler errorHandler);
 
+	void resetPorts();
+
+public:
 	/**
 	 * Contructor, using the default factory settings
 	 */
-	CGateway(CPortFactory::port_t portA,  CPortFactory::port_t portB,CentralErrorHandler errorHandler);
+	CGateway(CPortFactory::port_t portA,  CPortFactory::port_t portB);
 
-	CGateway(CPort *portA,  CPort* portB , CentralErrorHandler errorHandler);
+	CGateway(CPort *portA,  CPort* portB);
 
 	RC_t transmitFromAToB();
 

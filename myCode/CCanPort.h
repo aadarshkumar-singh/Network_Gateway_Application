@@ -19,6 +19,7 @@ class CRingBuffer;
 
 #define CAN_DEFAULTBUFFERSIZE 64
 #define PORT_CANNMAX 2
+#define CAN_PACKETSIZE 8
 
 class CCanPort : public CPort {
 
@@ -51,6 +52,13 @@ public:
 			 uint16_t bufferSizeTx = CAN_DEFAULTBUFFERSIZE
 			 );
 
+	/**
+	 * Get the size of a package for the peripheral
+	 * \return packagesize in byte
+	 */
+	uint16_t getDriverPackageSize();
+
+
 private:
 
 	/**
@@ -70,11 +78,7 @@ private:
 	 */
 	RC_t readPackage_hw(CRingBuffer& dataReadFromHw);
 
-	/**
-	 * Get the size of a package for the peripheral
-	 * \return packagesize in byte
-	 */
-	uint16_t getDriverPackageSize();
+
 };
 
 #endif /* CCANPORT_H */

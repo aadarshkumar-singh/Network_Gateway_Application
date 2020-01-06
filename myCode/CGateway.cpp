@@ -11,15 +11,33 @@
 #include "CPort.h"
 using namespace std;
 
-CGateway::CGateway(CPort &portA, CPort &portB,CentralErrorHandler errorHandler):
-		m_errorHandler(errorHandler)
+
+CGateway::CGateway(CPortFactory::port_t portA, CPortFactory::port_t portB)
 {
-	m_portA = &portA;
-	m_portB = &portB;
+	m_portA = CPortFactory::createPort(portA);
+	m_portB = CPortFactory::createPort(portB);
+
+	if (m_portA == NULL || m_portB ==NULL)
+	{
+		errorHandler.report(CEH_INVALIDPOINTER);
+	}
+}
+
+CGateway::CGateway(CPort *portA, CPort *portB)
+{
+	if (portA == NULL || portB == NULL)
+	{
+		errorHandler.report(CEH_INVALIDPOINTER);
+	}
+
+	m_portA = portA;
+	m_portB = portB;
 }
 
 RC_t CGateway::transmitFromAToB()
 {
+	//Simulate reception of data
+	m_portA->portRx_isr();
 
 	if (0 == m_portA || 0 == m_portB)
 	{
@@ -41,35 +59,31 @@ RC_t CGateway::transmitFromAToB()
 	return result;
 }
 
-CGateway::CGateway(CPortFactory::port_t portA, CPortFactory::port_t portB,CentralErrorHandler errorHandler):
-		m_errorHandler(errorHandler)
-{
-	m_portA = CPortFactory::createPort(portA);
-	m_portB = CPortFactory::createPort(portB);
 
-	if (m_portA == NULL || m_portB ==NULL)
+void CGateway::resetPorts()
+{
+	if (m_portA->getDriverPackageSize() == CAN_PACKETSIZE)
 	{
-		errorHandler.report(CEH_MAXIMUMLIMITOFPORTREACHED);
+		CPortFactory::decrementCountCanPort();
 	}
-	//Simulate reception of data
-	m_portA->portRx_isr();
-}
-
-CGateway::CGateway(CPort *portA, CPort *portB,CentralErrorHandler errorHandler):
-		m_errorHandler(errorHandler)
-{
-	if (portA == NULL || portB == NULL)
+	else
 	{
-		errorHandler.report(CEH_MAXIMUMLIMITOFPORTREACHED);
+		CPortFactory::decrementCountUartPort();
 	}
 
-	m_portA = portA;
-	m_portB = portB;
-
+	if(m_portB->getDriverPackageSize() == CAN_PACKETSIZE)
+	{
+		CPortFactory::decrementCountCanPort();
+	}
+	else
+	{
+		CPortFactory::decrementCountUartPort();
+	}
 }
 
 CGateway::~CGateway()
 {
+	resetPorts();
 	m_portA = 0;
 	m_portB = 0;
 }

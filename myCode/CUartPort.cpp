@@ -18,7 +18,7 @@ using namespace std;
 #include "CUartPort.h"
 #include "CRingBuffer.h"
 
-#define UART_PACKETSIZE 1
+
 //Method Implementations
 
 
@@ -48,6 +48,8 @@ RC_t CUartPort::readPackage_hw(CRingBuffer& dataReadFromHw)
 		if (counter >= 20)
 		{
 			cout << "Just read from UART hardware: " << dataReadFromHw << endl;
+			fakeData = 'a';
+			counter = 0;
 			return RC_NODATA;
 		}
 	}

@@ -68,6 +68,12 @@ public:
 
     RC_t portRx_isr();
 
+    /**
+      * Get the size of a package for the peripheral
+      * \return packagesize in byte
+      */
+    virtual uint16_t getDriverPackageSize() = 0;
+
 private:
 
     /**
@@ -85,11 +91,6 @@ private:
     * Device specific ErrorCode - in case of error
     */
     virtual RC_t readPackage_hw(CRingBuffer& data) = 0;
-    /**
-    * Get the size of a package for the peripheral
-    * \return packagesize in byte
-    */
-    virtual uint16_t getDriverPackageSize() = 0;
 
 };
 /********************

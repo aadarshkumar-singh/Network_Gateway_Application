@@ -9,39 +9,18 @@
 using namespace std;
 
 // Add your project's header files here
-#include "CGateway.h"
-#include "CPortFactory.h"
-#include "CPort.h"
+#include "CSimulationTestGatewayApp.h"
 #include "CentralErrorHandler.h"
 
-void terminateError()
-{
-	cerr << "Hard termination" << endl;
-	terminate();
-}
+ErrorWriter errorConsole;
+CentralErrorHandler errorHandler(errorConsole,CentralErrorHandler::terminateError);
 
-void terminateWarning()
-{
-	cerr << "No termination - program continues" << endl;
-}
 
 // Main program
 int main (void)
 {
-	ErrorWriter errorConsole;
-	CentralErrorHandler errorHandle(errorConsole,terminateError);
-
-	CGateway simpleGateway(CPortFactory::UART, CPortFactory::CAN,errorHandle);
-	simpleGateway.transmitFromAToB();
-
-	CPort* portA = CPortFactory::createPort(CPortFactory::UART);
-	CPort* portB = CPortFactory::createPort(CPortFactory::CAN);
-	CGateway simpleGateway2(portA,portB,errorHandle);
-
-
-	CPort* portA1 = CPortFactory::createPort(CPortFactory::UART);
-	CPort* portB1 = CPortFactory::createPort(CPortFactory::CAN);
-	CGateway simpleGateway3(portA1,portB1,errorHandle);
+	CSimulationTestGatewayApp testGateway;
+	testGateway.simulateGateway();
 
 	return 0;
 }

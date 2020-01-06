@@ -30,6 +30,7 @@
 		DEF(			BUFFEROVERRUN,				true,			false)		/**< \brief  Buffer was full, error e.g. in case of write operation */				\
 		DEF(			INVALIDPOINTER,				true,			true)		/**< \brief  Invalid Pointer */														\
 		DEF(			MAXIMUMLIMITOFPORTREACHED, 	true,			true)		/**< \brief  Maximum Port per system reached */										\
+		DEF(			INVALID_OPTION, 			true,			true)		/**< \brief  Invalid Option Entered by user for simulation test */					\
 
 
 /*=======================[ Event configuration END, no modifications after this line ]=================================================================*/

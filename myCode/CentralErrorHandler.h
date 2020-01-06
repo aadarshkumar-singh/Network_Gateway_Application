@@ -42,8 +42,13 @@ public:
 	 */
 	RC_t report(CEH_source_t err);
 
-	void operator=(CentralErrorHandler &handler);
+	static void terminateError();
+
+	static void terminateWarning();
+
 
 };
+
+extern CentralErrorHandler errorHandler;
 
 #endif /* CENTRALERRORHANDLER_H_ */

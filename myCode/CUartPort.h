@@ -17,6 +17,7 @@
 
 #define UART_DEFAULTBUFFERSIZE 20
 #define PORT_ASCLINMAX 4
+#define UART_PACKETSIZE 1
 
 class CUartPort : public CPort {
 
@@ -59,6 +60,12 @@ public:
 			 uint16_t bufferSizeTx = UART_DEFAULTBUFFERSIZE
 			 );
 
+	/**
+	 * Get the size of a package for the peripheral
+	 * \return packagesize in byte
+	 */
+	uint16_t getDriverPackageSize();
+
 private:
 
 	/**
@@ -78,11 +85,6 @@ private:
 	 */
 	RC_t readPackage_hw(CRingBuffer& dataReadFromHw);
 
-	/**
-	 * Get the size of a package for the peripheral
-	 * \return packagesize in byte
-	 */
-	uint16_t getDriverPackageSize();
 };
 
 #endif /* CUARTPORT_H */

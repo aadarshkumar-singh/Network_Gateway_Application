@@ -14,6 +14,7 @@
 #include "CPort.h"
 #include "CUartPort.h"
 #include "CCanPort.h"
+#include "CentralErrorHandler.h"
 
 class CPortFactory {
 private:
@@ -21,8 +22,8 @@ private:
 	/*# CUartPort lnkCUartPort; */
 	/**@link dependency*/
 	/*# CCanPort lnkCCanPort; */
-	static int countUartPort;
-	static int countCanPort;
+	static uint8_t countUartPort;
+	static uint8_t countCanPort;
 
 public:
 
@@ -48,6 +49,10 @@ public:
 	 * Will create a port using the default configuration of the port (i.e. the default parameters set above)
 	 */
 	static CPort* createPort(port_t port);
+
+	static void decrementCountCanPort();
+
+	static void decrementCountUartPort();
 
 
 };

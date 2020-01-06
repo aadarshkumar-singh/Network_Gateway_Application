@@ -1,4 +1,3 @@
-
 /***************************************************************************
 *============= Copyright by Darmstadt University of Applied Sciences =======
 ****************************************************************************
@@ -19,8 +18,9 @@
 
 //Method Implementations
 
-int CPortFactory::countUartPort = 0;
-int CPortFactory::countCanPort = 0;
+uint8_t CPortFactory::countUartPort = 0;
+uint8_t CPortFactory::countCanPort = 0;
+
 
 CPort* CPortFactory::createCanPort(CCanPort::port_t port,
 		uint32_t baudrate, uint16_t bufferSizeRx, uint16_t bufferSizeTx)
@@ -33,6 +33,7 @@ CPort* CPortFactory::createCanPort(CCanPort::port_t port,
 	}
 	else
 	{
+		errorHandler.report(CEH_MAXIMUMLIMITOFPORTREACHED);
 		return NULL;
 	}
 }
@@ -48,6 +49,7 @@ CPort* CPortFactory::createUartPort(CUartPort::port_t port,
 	}
 	else
 	{
+		errorHandler.report(CEH_MAXIMUMLIMITOFPORTREACHED);
 		return NULL;
 	}
 
@@ -63,4 +65,14 @@ CPort* CPortFactory::createPort(port_t port)
 	}
 
 	return 0;
+}
+
+void CPortFactory::decrementCountCanPort()
+{
+	countCanPort--;
+}
+
+void CPortFactory::decrementCountUartPort()
+{
+	countUartPort--;
 }

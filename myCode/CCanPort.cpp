@@ -5,7 +5,6 @@ using namespace std;
 
 #include "CCanPort.h"
 
-#define CAN_PACKETSIZE 8
 
 CCanPort::CCanPort(port_t port, uint32_t baudrate, uint16_t bufferSizeRx, uint16_t bufferSizeTx) : CPort(bufferSizeTx, bufferSizeRx)
 {
@@ -32,6 +31,8 @@ RC_t CCanPort::readPackage_hw(CRingBuffer& dataReadFromHw)
 		if (counter >= 20)
 		{
 			cout << "Just read from CAN hardware: " << dataReadFromHw << endl;
+			fakeData = 'a';
+			counter = 0;
 			return RC_NODATA;
 		}
 	}
