@@ -16,6 +16,10 @@ RC_t CCanPort::writePackage_hw(CRingBuffer data)
 	return RC_SUCCESS;
 }
 
+CCanPort::~CCanPort()
+{
+	//cout <<"Destroy the Can Port"<<endl;
+}
 
 RC_t CCanPort::readPackage_hw(CRingBuffer& dataReadFromHw)
 {

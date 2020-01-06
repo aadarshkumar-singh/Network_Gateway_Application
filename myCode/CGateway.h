@@ -12,14 +12,16 @@
 #include "CPort.h"
 #include "CPortFactory.h"
 #include "CentralErrorHandler.h"
-
+#include <vector>
+#include <algorithm>
 class CGateway
 {
 private:
 	CPort* m_portA;
 	CPort* m_portB;
-
+	static std::vector <CPort*> m_OpenedPorts;
 	void resetPorts();
+	bool checkIfOpeningValidPort(CPort* port);
 
 public:
 	/**

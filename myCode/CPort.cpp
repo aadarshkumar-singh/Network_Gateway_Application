@@ -138,3 +138,8 @@ RC_t CPort::portRx_isr()
 	return RC_SUCCESS;
 
 }
+
+CPort::~CPort()
+{
+	//cout <<"Destructor of base class called "<<endl;
+}

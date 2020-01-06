@@ -63,3 +63,8 @@ uint16_t CUartPort::getDriverPackageSize()
 {
 	return (UART_PACKETSIZE);
 }
+
+CUartPort::~CUartPort()
+{
+	//cout <<"Destroyed UART Port"<<endl;
+}

@@ -66,6 +66,8 @@ public:
 	 */
 	uint16_t getDriverPackageSize();
 
+	~CUartPort();
+
 private:
 
 	/**

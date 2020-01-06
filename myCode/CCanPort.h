@@ -58,6 +58,8 @@ public:
 	 */
 	uint16_t getDriverPackageSize();
 
+	~CCanPort();
+
 
 private:
 

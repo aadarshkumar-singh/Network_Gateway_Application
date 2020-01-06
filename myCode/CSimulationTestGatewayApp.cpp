@@ -15,7 +15,8 @@ typedef enum simulationMenu_e
 	UARTTOUART,
 	INVALIDORNULLPOINTER,
 	MAXIMUMPORTLIMITREACHED,
-	EXITSIMULATIONMENU
+	REOPENINGOPENEDPORT,
+	EXITSIMULATIONMENU,
 
 }simulationMenu_t;
 
@@ -38,8 +39,9 @@ void CSimulationTestGatewayApp::simulateGateway()
 		cout <<"4. Simulation of UART to UART communication"<<endl;
 		cout <<"5. Simulation when Invalid/NULL Pointer passed to gateway"<<endl;
 		cout <<"6. Simulation of Maximum Port limit Reached"<<endl;
-		cout <<"7.Terminate the Simulation"<<endl;
-		cin >> choice;
+		cout <<"7.Simulation of reopening an already open port"<<endl;
+		cout <<"8.Terminate the Simulation"<<endl;
+		cin>>choice;
 
 		switch(choice)
 		{
@@ -94,10 +96,30 @@ void CSimulationTestGatewayApp::simulateGateway()
 			CPort* portA1 = CPortFactory::createPort(CPortFactory::UART);
 			CPort* portB1 = CPortFactory::createPort(CPortFactory::CAN);
 			CGateway simpleGateway1(portA1,portB1);
+			simpleGateway1.transmitFromAToB();
 
 			CPort* portA2 = CPortFactory::createPort(CPortFactory::CAN);
-			CPort* portB2 = CPortFactory::createPort(CPortFactory::CAN);
+			CPort* portB2 = CPortFactory::createPort(CPortFactory::UART);
 			CGateway simpleGateway2(portA2,portB2);
+			simpleGateway2.transmitFromAToB();
+
+			CPort* portA3 = CPortFactory::createPort(CPortFactory::CAN);
+			CPort* portB3 = CPortFactory::createPort(CPortFactory::UART);
+			CGateway simpleGateway3(portA3,portB3);
+			simpleGateway3.transmitFromAToB();
+
+			break;
+		}
+
+		case REOPENINGOPENEDPORT :
+		{
+			CPort* portA1 = CPortFactory::createPort(CPortFactory::UART);
+			CPort* portB1 = CPortFactory::createPort(CPortFactory::CAN);
+			CGateway simpleGateway1(portA1,portB1);
+			simpleGateway1.transmitFromAToB();
+			CPort* portA2 = CPortFactory::createPort(CPortFactory::UART);
+			CGateway simpleGateway2(portA2,portB1);
+			simpleGateway2.transmitFromAToB();
 			break;
 		}
 

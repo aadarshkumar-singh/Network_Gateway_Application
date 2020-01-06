@@ -11,6 +11,7 @@
 #include "CPort.h"
 using namespace std;
 
+std::vector<CPort*> CGateway::m_OpenedPorts ;
 
 CGateway::CGateway(CPortFactory::port_t portA, CPortFactory::port_t portB)
 {
@@ -25,13 +26,32 @@ CGateway::CGateway(CPortFactory::port_t portA, CPortFactory::port_t portB)
 
 CGateway::CGateway(CPort *portA, CPort *portB)
 {
+	bool flagForValidPorts = false ;
+
 	if (portA == NULL || portB == NULL)
 	{
 		errorHandler.report(CEH_INVALIDPOINTER);
 	}
 
-	m_portA = portA;
-	m_portB = portB;
+	try
+	{
+		flagForValidPorts = (checkIfOpeningValidPort(portA) && checkIfOpeningValidPort(portB));
+		if(flagForValidPorts)
+		{
+			m_portA = portA;
+			m_portB = portB;
+		}
+		else
+		{
+			throw flagForValidPorts ;
+		}
+	}
+	catch(bool& flagForValidPorts)
+	{
+		cout<<" Gateway trying to use ports that are already opened ::> "<<endl;
+		errorHandler.report(CEH_INVALIDPORT);
+	}
+
 }
 
 RC_t CGateway::transmitFromAToB()
@@ -86,5 +106,31 @@ CGateway::~CGateway()
 	resetPorts();
 	m_portA = 0;
 	m_portB = 0;
+
+	m_OpenedPorts.clear();
 }
 
+bool CGateway::checkIfOpeningValidPort(CPort *port)
+{
+	bool flag = false ;
+
+	if (m_OpenedPorts.empty())
+	{
+		m_OpenedPorts.push_back(port);
+		flag = true;
+	}
+	else
+	{
+		if ( std::find(m_OpenedPorts.begin(), m_OpenedPorts.end(), port) != m_OpenedPorts.end() )
+		{
+			flag = false;
+		}
+		else
+		{
+			flag = true;
+			m_OpenedPorts.push_back(port);
+		}
+	}
+	return flag;
+
+}

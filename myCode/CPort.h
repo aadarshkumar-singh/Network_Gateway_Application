@@ -68,6 +68,8 @@ public:
 
     RC_t portRx_isr();
 
+    virtual ~CPort();
+
     /**
       * Get the size of a package for the peripheral
       * \return packagesize in byte

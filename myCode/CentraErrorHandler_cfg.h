@@ -31,7 +31,7 @@
 		DEF(			INVALIDPOINTER,				true,			true)		/**< \brief  Invalid Pointer */														\
 		DEF(			MAXIMUMLIMITOFPORTREACHED, 	true,			true)		/**< \brief  Maximum Port per system reached */										\
 		DEF(			INVALID_OPTION, 			true,			true)		/**< \brief  Invalid Option Entered by user for simulation test */					\
-
+		DEF(			INVALIDPORT,				true,			true)		/**< \brief  Invalid Pointer */														\
 
 /*=======================[ Event configuration END, no modifications after this line ]=================================================================*/
 
