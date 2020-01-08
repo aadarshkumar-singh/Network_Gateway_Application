@@ -10,7 +10,7 @@ CCanPort::CCanPort(port_t port, uint32_t baudrate, uint16_t bufferSizeRx, uint16
 {
 }
 
-RC_t CCanPort::writePackage_hw(CRingBuffer data)
+RC_t CCanPort::writePackage_hw(CRingBuffer& data)
 {
 	cout << "Just wrote to CAN hardware: " << data << endl;
 	return RC_SUCCESS;

@@ -132,5 +132,4 @@ bool CGateway::checkIfOpeningValidPort(CPort *port)
 		}
 	}
 	return flag;
-
 }

@@ -25,6 +25,7 @@ private:
 public:
 
     CRingBuffer(uint16_t size = 10);
+    CRingBuffer(const CRingBuffer &copyRingBuffer);
     ~CRingBuffer();
     friend ostream& operator <<(ostream &lhs , const CRingBuffer& rhs);
     RC_t read(uint8_t& data);

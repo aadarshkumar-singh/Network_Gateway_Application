@@ -77,7 +77,7 @@ private:
 	 * RC_SUCCESS - byte was transmitted
 	 * Device specific ErrorCode - in case of error
 	 */
-	RC_t writePackage_hw(CRingBuffer data);
+	RC_t writePackage_hw(CRingBuffer& data);
 
 	/**
 	 * \brief Receive one Package from the hardware

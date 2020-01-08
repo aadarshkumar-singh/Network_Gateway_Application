@@ -101,3 +101,12 @@ uint16_t CRingBuffer::getFillLevelOfBuffer()
 {
 	return m_fillLevel ;
 }
+
+CRingBuffer::CRingBuffer(const CRingBuffer &copyRingBuffer)
+{
+	this->m_fillLevel =copyRingBuffer.m_fillLevel;
+	this->m_pBuffer =copyRingBuffer.m_pBuffer;
+	this->m_readIdx =copyRingBuffer.m_readIdx;
+	this->m_size =copyRingBuffer.m_size;
+	this->m_writeIdx =copyRingBuffer.m_writeIdx;
+}
