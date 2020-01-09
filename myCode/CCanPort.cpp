@@ -1,4 +1,12 @@
-
+/***************************************************************************
+*============= Copyright by Darmstadt University of Applied Sciences =======
+****************************************************************************
+* Filename        : CCANPORT.CPP
+* Author          : Aadarsh Kumar Singh
+* Description     : Source file that has APIs to create CAN port and
+* 					defines packaging data to be transmitted and received
+* 					via CAN port.
+****************************************************************************/
 #include <iostream>
 using namespace std;
 

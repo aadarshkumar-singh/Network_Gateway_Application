@@ -1,31 +1,41 @@
-/*
- * CSimulationTestGatewayApp.cpp
+/***************************************************************************
+ ****************************************************************************
+ * \file CSimulationTestGatewayApp.cpp
+ * \author Aadarsh Kumar Singh <aadarsh.k.singh@stud.h-da.de>
+ * \date 30.12.2019
  *
- *  Created on: Jan 6, 2020
- *      Author: Aadarshxp
- */
+ * \brief CSimulationTestGatewayApp.cpp
+ *
+ * Source file that defines API to simulate all the test cases of the Gateway
+ *
+ ****************************************************************************/
 
 #include "CSimulationTestGatewayApp.h"
 
+/**
+ * \brief enum for every simulation test case of the gatewat
+ */
 typedef enum simulationMenu_e
 {
-	UARTTOCAN = 1,
-	CANTOUART,
-	CANTOCAN,
-	UARTTOUART,
-	INVALIDORNULLPOINTER,
-	MAXIMUMPORTLIMITREACHED,
-	REOPENINGOPENEDPORT,
-	EXITSIMULATIONMENU,
+	UARTTOCAN = 1,          //!< UARTTOCAN  : Simulation of UART to CAN communication
+	CANTOUART,              //!< CANTOUART  : Simulation of CAN to UART communication
+	CANTOCAN,               //!< CANTOCAN   : Simulation of CAN to CAN communication
+	UARTTOUART,             //!< UARTTOUART : Simulation of UART to UART communication
+	INVALIDORNULLPOINTER,   //!< INVALIDORNULLPOINTER : Simulation of error while Invalid/NULL Port Pointer passed to gateway
+	MAXIMUMPORTLIMITREACHED,//!< MAXIMUMPORTLIMITREACHED : Simulation of error while Maximum Port reached gateway
+	REOPENINGOPENEDPORT,    //!< REOPENINGOPENEDPORT : Simulation of error while reopening the port previously used.
+	EXITSIMULATIONMENU,     //!< EXITSIMULATIONMENU : Exit simulation
 
 }simulationMenu_t;
 
 CSimulationTestGatewayApp::CSimulationTestGatewayApp()
 {
-	// TODO Auto-generated constructor stub
 
 }
 
+/**
+ * \brief This class defines the API to simulate the testcases of the Gateway
+ */
 void CSimulationTestGatewayApp::simulateGateway()
 {
 	int choice ;
@@ -45,6 +55,7 @@ void CSimulationTestGatewayApp::simulateGateway()
 
 		switch(choice)
 		{
+		//Simulation of UART to CAN communication
 		case UARTTOCAN :
 		{
 			CPort* portA = CPortFactory::createPort(CPortFactory::UART);
@@ -53,6 +64,7 @@ void CSimulationTestGatewayApp::simulateGateway()
 			simpleGateway.transmitFromAToB();
 			break;
 		}
+		//Simulation of CAN to UART communication
 		case CANTOUART :
 		{
 			CPort* portA = CPortFactory::createPort(CPortFactory::CAN);
@@ -61,7 +73,7 @@ void CSimulationTestGatewayApp::simulateGateway()
 			simpleGateway.transmitFromAToB();
 			break;
 		}
-
+		//Simulation of CAN to CAN communication
 		case CANTOCAN:
 		{
 			CPort* portA = CPortFactory::createPort(CPortFactory::CAN);
@@ -70,7 +82,7 @@ void CSimulationTestGatewayApp::simulateGateway()
 			simpleGateway.transmitFromAToB();
 			break;
 		}
-
+		//Simulation of UART to UART communication
 		case UARTTOUART:
 		{
 			CPort* portA = CPortFactory::createPort(CPortFactory::UART);
@@ -79,8 +91,7 @@ void CSimulationTestGatewayApp::simulateGateway()
 			simpleGateway.transmitFromAToB();
 			break;
 		}
-
-
+		// Simulation of error while Invalid/NULL Port Pointer passed to gateway
 		case INVALIDORNULLPOINTER :
 		{
 			CPort* portA = NULL;
@@ -90,18 +101,18 @@ void CSimulationTestGatewayApp::simulateGateway()
 			break;
 
 		}
-
+		// Simulation of error while Maximum Port reached gateway
 		case MAXIMUMPORTLIMITREACHED :
 		{
 			CPort* portA1 = CPortFactory::createPort(CPortFactory::UART);
 			CPort* portB1 = CPortFactory::createPort(CPortFactory::CAN);
 			CGateway simpleGateway1(portA1,portB1);
-			simpleGateway1.transmitFromAToB();
+			//simpleGateway1.transmitFromAToB();
 
 			CPort* portA2 = CPortFactory::createPort(CPortFactory::CAN);
 			CPort* portB2 = CPortFactory::createPort(CPortFactory::UART);
 			CGateway simpleGateway2(portA2,portB2);
-			simpleGateway2.transmitFromAToB();
+			//simpleGateway2.transmitFromAToB();
 
 			CPort* portA3 = CPortFactory::createPort(CPortFactory::CAN);
 			CPort* portB3 = CPortFactory::createPort(CPortFactory::UART);
@@ -111,18 +122,20 @@ void CSimulationTestGatewayApp::simulateGateway()
 			break;
 		}
 
+		//Simulation of error while reopening the port previously used.
 		case REOPENINGOPENEDPORT :
 		{
 			CPort* portA1 = CPortFactory::createPort(CPortFactory::UART);
 			CPort* portB1 = CPortFactory::createPort(CPortFactory::CAN);
 			CGateway simpleGateway1(portA1,portB1);
-			simpleGateway1.transmitFromAToB();
+			//simpleGateway1.transmitFromAToB();
 			CPort* portA2 = CPortFactory::createPort(CPortFactory::UART);
 			CGateway simpleGateway2(portA2,portB1);
 			simpleGateway2.transmitFromAToB();
 			break;
 		}
 
+		//Exit simulation
 		case EXITSIMULATIONMENU :
 		{
 			std::cout <<"**User Asked to Quit the Simulation ** "<<endl;

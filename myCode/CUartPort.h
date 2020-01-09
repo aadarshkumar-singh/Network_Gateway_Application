@@ -2,9 +2,10 @@
 *============= Copyright by Darmstadt University of Applied Sciences =======
 ****************************************************************************
 * Filename        : CUARTPORT.H
-* Author          :
-* Description     :
-*
+* Author          : Aadarsh Kumar Singh
+* Description     : Header file that has APIs to create UART port and
+* 					defines packaging data to be transmitted and received
+* 					via UART port.
 *
 ****************************************************************************/
 
@@ -15,10 +16,23 @@
 #include "CPort.h"
 #include "CRingbuffer.h"
 
+/**
+ * \brief Default Buffer Size defined for UART Communication in bytes
+ */
 #define UART_DEFAULTBUFFERSIZE 20
+/**
+ * \brief Maximum number of UART ports that can be created
+ */
 #define PORT_ASCLINMAX 4
+/**
+ * \brief Maximum size of UART packets in bytes.
+ */
 #define UART_PACKETSIZE 1
 
+/**
+ * \brief Class which has APIs to create UART port and defines packaging data
+ *  	  format for transmitting and receiving via UART port.
+ */
 class CUartPort : public CPort {
 
 public:
@@ -43,13 +57,13 @@ public:
      *  Constructor - Will initialize the peripheral port and setup the RX and TX buffers
      *  Please check the hardware limitations to ensure proper configuration parameters
      *
-     *  \param port_t port = NONE			: IN	The hardware port to be used
-     *  \param uint16_t baudrate = 115200	: IN	The baudrate of the device. Check the hardware manual for valid values.
-     *  \param uint8_t bits = 8				: IN	The number of data bits, typically 7 or 8
-     *  \param parity_t parity = NONE		: IN	Parity, ODD, EVEN or NONE
-     *  \param uint8_t stopbits = 1			: IN	Number of Stopbits, 1 or 2
-     *  \param uint16_t bufferSizeRx = UART_DEFAULTBUFFERSIZE : IN 	Size of the Receive Buffer
-     *  \param uint16_t bufferSizeTx = UART_DEFAULTBUFFERSIZE : IN Size of the Transmit Buffer
+     *  \param port_t port : NONE			: IN	The hardware port to be used
+     *  \param uint16_t baudrate : 115200	: IN	The baudrate of the device. Check the hardware manual for valid values.
+     *  \param uint8_t bits : 8				: IN	The number of data bits, typically 7 or 8
+     *  \param parity_t parity :NONE		: IN	Parity, ODD, EVEN or NONE
+     *  \param uint8_t stopbits : 1			: IN	Number of Stopbits, 1 or 2
+     *  \param uint16_t bufferSizeRx 		: UART_DEFAULTBUFFERSIZE : IN 	Size of the Receive Buffer
+     *  \param uint16_t bufferSizeTx  		: UART_DEFAULTBUFFERSIZE : IN Size of the Transmit Buffer
      */
     CUartPort(port_t port = NONE,
              uint32_t baudrate = 115200,
@@ -71,19 +85,18 @@ public:
 private:
 
 	/**
-	 * \brief Sends one Package to the hardware
+	 * \brief Sends one Package to the UART hardware
 	 *
 	 * \return RC_t:
 	 * RC_SUCCESS - byte was transmitted
-	 * Device specific ErrorCode - in case of error
 	 */
 	RC_t writePackage_hw(CRingBuffer& data);
 
 	/**
-	 * \brief Receive one Package from the hardware
+	 * \brief Receive one Package from the UART hardware
 	 *
 	 * RC_SUCCESS - byte was received
-	 * Device specific ErrorCode - in case of error
+	 * RC_NODATA  - When no data available for reception
 	 */
 	RC_t readPackage_hw(CRingBuffer& dataReadFromHw);
 

@@ -3,9 +3,10 @@
 *============= Copyright by Darmstadt University of Applied Sciences =======
 ****************************************************************************
 * Filename        : CUARTPORT.CPP
-* Author          :
-* Description     :
-*
+* Author          : Aadarsh Kumar Singh
+* Description     : Source file that has APIs to create UART port and
+* 					defines packaging data to be transmitted and received
+* 					via UART port.
 *
 ****************************************************************************/
 

@@ -1,11 +1,11 @@
-
 /***************************************************************************
 *============= Copyright by Darmstadt University of Applied Sciences =======
 ****************************************************************************
 * Filename        : CPORT.CPP
-* Author          :
-* Description     :
-*
+* Author          : Aadarsh Kumar Singh
+* Description     : Source files that defines APIs to store the transmission
+* 					and reception data in a ring buffer when establishing
+* 					communication between ports via Gateway.
 *
 ****************************************************************************/
 

@@ -1,9 +1,14 @@
-/*
- * CSimulationTestGatewayApp.h
+/***************************************************************************
+ ****************************************************************************
+ * \file CSimulationTestGatewayApp.h
+ * \author Aadarsh Kumar Singh <aadarsh.k.singh@stud.h-da.de>
+ * \date 30.12.2019
  *
- *  Created on: Jan 6, 2020
- *      Author: Aadarshxp
- */
+ * \brief CSimulationTestGatewayApp.h
+ *
+ * Header file that declares API to simulate all the test cases of the Gateway
+ *
+ ****************************************************************************/
 
 #ifndef CSIMULATIONTESTGATEWAYAPP_H_
 #define CSIMULATIONTESTGATEWAYAPP_H_
@@ -17,10 +22,23 @@
 
 using namespace std;
 
+/**
+ * \brief This class defines the API to simulate the testcases of the Gateway
+ */
 class CSimulationTestGatewayApp
 {
+
 public:
+
+	/**
+	 * \brief Default Constructor
+	 */
 	CSimulationTestGatewayApp();
+
+	/**
+	 * \brief API to Simulate the gateway
+	 * @param None
+	 */
 	void simulateGateway();
 };
 

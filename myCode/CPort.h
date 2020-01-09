@@ -2,9 +2,10 @@
 *============= Copyright by Darmstadt University of Applied Sciences =======
 ****************************************************************************
 * Filename        : CPORT.H
-* Author          :
-* Description     :
-*
+* Author          : Aadarsh Kumar Singh
+* Description     : Header file that defines APIs to store the transmission
+* 					and reception data in a ring buffer when establishing
+* 					communication between ports via Gateway.
 *
 ****************************************************************************/
 
@@ -15,16 +16,23 @@
 #include "CRingBuffer.h"
 #include <string>
 
+/**
+ * \brief Base class which defines API to store the transmission
+* 		  and reception data in a ring buffer when establishing
+* 		  communication between ports via Gateway
+*/
 class CPort
 {
-
 protected:
-    /**@link aggregationByValue
-     * @supplierCardinality 1*/
+    /**
+     * \brief Ring buffer to store Transmission data
+     */
     CRingBuffer m_ringBufferTx;
 
-    /**@link aggregationByValue
-     * @supplierCardinality 1*/
+
+    /**
+     * \brief Ring buffer to store Reception data
+     */
     CRingBuffer m_ringBufferRx;
 public:
 
@@ -65,7 +73,6 @@ public:
      * 		RC_SUCCESS - all ok
      * 		Specific error code in case of error
      */
-
     RC_t portRx_isr();
 
     virtual ~CPort();
@@ -82,7 +89,7 @@ private:
     * \brief Sends one Package to the hardware
     *
     * \return RC_t:
-    * RC_SUCCESS - byte was transmitted
+    * 	RC_SUCCESS - byte was transmitted
     * Device specific ErrorCode - in case of error
     */
     virtual RC_t writePackage_hw(CRingBuffer& data) = 0;

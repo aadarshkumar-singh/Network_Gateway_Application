@@ -18,24 +18,51 @@
 
 class CPortFactory {
 private:
-	/**@link dependency*/
-	/*# CUartPort lnkCUartPort; */
-	/**@link dependency*/
-	/*# CCanPort lnkCCanPort; */
+	/**
+	 * \brief Count Number of UART ports open during program Execution
+	 */
 	static uint8_t countUartPort;
+
+	/**
+	 * \brief Count Number of Can ports open during program Execution
+	 */
 	static uint8_t countCanPort;
 
 public:
 
+	/**
+	 * \brief ENUM that defines flag to define ports which are supported
+	 *
+	 */
+	enum port_t
+	{
+		UART, //!< UART : port for UART communication
+		CAN,  //!< CAN  : port for CAN communication
+		NONE, //!< NONE : No port
+	};
 
-	enum port_t{UART, CAN, NONE};
-
+	/**
+	 * \brief Create CAN port
+	 * @param port : The type of CAN port
+	 * @param baudrate : The baudrate of the device. Check the hardware manual for valid values.
+	 * @param bufferSizeRx : Size of the Receive Buffer
+	 * @param bufferSizeTx : Size of the Transmit buffer
+	 * @return CPort * : Returns a pointer of UART communication
+	 */
 	static CPort* createCanPort(
 			CCanPort::port_t port = CCanPort::NONE,
 			uint32_t baudrate = 1000000,
 			uint16_t bufferSizeRx = CAN_DEFAULTBUFFERSIZE,
 			uint16_t bufferSizeTx = CAN_DEFAULTBUFFERSIZE);
 
+	/**
+	 * \brief Create UART port
+	 * @param port : The type of UART port
+	 * @param baudrate : The baudrate of the device. Check the hardware manual for valid values.
+	 * @param bufferSizeRx : Size of the Receive Buffer
+	 * @param bufferSizeTx : Size of the Transmit buffer
+	 * @return CPort * : Returns a pointer of UART communication
+	 */
 	static CPort* createUartPort(
 			CUartPort::port_t port = CUartPort::NONE,
 			uint32_t baudrate = 115200,
@@ -46,12 +73,20 @@ public:
 			uint16_t bufferSizeTx = UART_DEFAULTBUFFERSIZE);
 
 	/**
-	 * Will create a port using the default configuration of the port (i.e. the default parameters set above)
+	 * \brief Will create a port using the default configuration of the port (i.e. the default parameters set above)
+	 * \param : port_t : UART : To create UART port
+	 * 					 CAN  : To create CAN port
 	 */
 	static CPort* createPort(port_t port);
 
+	/**
+	 * \brief Decrement Count of number of CAN Port that are opened.
+	 */
 	static void decrementCountCanPort();
 
+	/**
+	 * \brief Decrement Count of number of UART Port that are opened.
+	 */
 	static void decrementCountUartPort();
 
 

@@ -11,6 +11,10 @@
 #include "CPort.h"
 using namespace std;
 
+/**
+ * \brief Vector that stores the address of ports that are opened
+ * 		  for establishing gateway communication.
+ */
 std::vector<CPort*> CGateway::m_OpenedPorts ;
 
 CGateway::CGateway(CPortFactory::port_t portA, CPortFactory::port_t portB)
@@ -24,6 +28,17 @@ CGateway::CGateway(CPortFactory::port_t portA, CPortFactory::port_t portB)
 	}
 }
 
+/*
+ * \brief Constructor that accepts the pointer arguments
+ * 		  and creates a gateway object if ports are valid.
+ *
+ * @param portA : Pointer to first communication port
+ * @param portB : Pointer to second communication port
+ *
+ * \note : In case the ports are invalid:
+ * 			Null/Invalid : error message of Invalid pointer is printed and program is terminated.
+ * 			Invalid Port : error message of Invalid port is printed and program is terminated.
+ */
 CGateway::CGateway(CPort *portA, CPort *portB)
 {
 	bool flagForValidPorts = false ;
@@ -53,7 +68,12 @@ CGateway::CGateway(CPort *portA, CPort *portB)
 	}
 
 }
-
+/*
+ * Transmits the data from communication port A to Communication port B.
+ *
+ * @return error code : RC_ERROR : if error in transmitting data
+ * 						RC_SUCCESS : if transmission is successfull.
+ */
 RC_t CGateway::transmitFromAToB()
 {
 	//Simulate reception of data
@@ -79,9 +99,15 @@ RC_t CGateway::transmitFromAToB()
 	return result;
 }
 
-
+/*
+ * \brief API to decrement the count of the communication ports
+ * 		  When the port is not used by the gateway object
+ *
+ * @param None
+ */
 void CGateway::resetPorts()
 {
+	// Check if The port is CAN/ UART , decrement the count of Port accordingly
 	if (m_portA->getDriverPackageSize() == CAN_PACKETSIZE)
 	{
 		CPortFactory::decrementCountCanPort();
@@ -91,6 +117,7 @@ void CGateway::resetPorts()
 		CPortFactory::decrementCountUartPort();
 	}
 
+	// Check if The port is CAN/ UART , decrement the count of Port accordingly
 	if(m_portB->getDriverPackageSize() == CAN_PACKETSIZE)
 	{
 		CPortFactory::decrementCountCanPort();
@@ -103,17 +130,31 @@ void CGateway::resetPorts()
 
 CGateway::~CGateway()
 {
+	//Decrement the count of UART/CAN depending on the port opened.
 	resetPorts();
 	m_portA = 0;
 	m_portB = 0;
-
+	// Clear the vector that stores the address of all the ports that are already in use.
 	m_OpenedPorts.clear();
 }
 
+/*
+ * \brief API which checks if a valid port is opened for establishing
+ * 		  communication via Gateway Object.
+ * 		  It checks if the port is already opened and if it is already
+ * 		  used by gateway object
+ *
+ * @param  port : Pointer to the communication port like CAN/UART
+ * @return true : If the port is not used by any other gateway object
+ * 				  and can be used for establishing communication.
+ * 		   false : If the port is already opened and is already
+ * 		  			used by gateway object
+ */
 bool CGateway::checkIfOpeningValidPort(CPort *port)
 {
 	bool flag = false ;
 
+	// If vector to store port address empty , directly push the port address
 	if (m_OpenedPorts.empty())
 	{
 		m_OpenedPorts.push_back(port);
@@ -121,6 +162,7 @@ bool CGateway::checkIfOpeningValidPort(CPort *port)
 	}
 	else
 	{
+		// Check if the port passed in parameter present in the vector
 		if ( std::find(m_OpenedPorts.begin(), m_OpenedPorts.end(), port) != m_OpenedPorts.end() )
 		{
 			flag = false;
