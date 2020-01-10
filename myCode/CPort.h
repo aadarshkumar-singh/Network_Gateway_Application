@@ -36,13 +36,18 @@ protected:
     CRingBuffer m_ringBufferRx;
 public:
 
+    /**
+     * \brief Creates Transmission and reception buffer of given size
+     * @param txSize Transmit Buffer size
+     * @param rxSize Receive Buffer Size
+     */
     CPort(uint16_t txSize = 10, uint16_t rxSize = 10);
 
 
     /**
      * \brief Sends one Byte to the buffer
      *
-     * \param string data	: IN	Byte to be transmitted
+     * \param data string	: IN	Byte to be transmitted
      * \return RC_t:
      * 		 RC_SUCCESS - byte was transmitted
      * 		 RC_BUFFEROVERFLOW - in case of full buffer
@@ -52,8 +57,8 @@ public:
     /**
      * \brief Receive one Byte from the buffer
      *
-     * \param string& data	: OUT	Byte received
-     * \return RC_t:
+     * @param data string&	: OUT	Byte received
+     * @return RC_t:
      * 		 RC_SUCCESS - byte was received
      * 		 RC_BUFFERUNDERFLOW - in case of empty buffer
      */
@@ -61,7 +66,7 @@ public:
 
     /**
      * \brief Will transmit all data from TX buffer to hardware
-     * \return
+     * @return RC_t
      * 		RC_SUCCESS - all ok
      * 		Specific error code in case of error
      */
@@ -69,36 +74,40 @@ public:
 
     /**
      * \brief Will transmit all data from RX hardware to buffer
-     * \return
+     * @return
      * 		RC_SUCCESS - all ok
      * 		Specific error code in case of error
      */
     RC_t portRx_isr();
 
+    /**
+     * \brief Destructor of the Port
+     */
     virtual ~CPort();
 
-    /**
-      * Get the size of a package for the peripheral
-      * \return packagesize in byte
-      */
+	/**
+	 * \brief Get the size of a package for the peripheral
+	 * @return package size in byte
+	 */
     virtual uint16_t getDriverPackageSize() = 0;
 
 private:
 
-    /**
-    * \brief Sends one Package to the hardware
-    *
-    * \return RC_t:
-    * 	RC_SUCCESS - byte was transmitted
-    * Device specific ErrorCode - in case of error
-    */
+	/**
+	 * \brief Sends one Package to the  hardware
+	 * @param data that has to be written to hardware
+	 * @return RC_t:
+	 * RC_SUCCESS - byte was transmitted
+	 */
     virtual RC_t writePackage_hw(CRingBuffer& data) = 0;
+
     /**
-    * \brief Receive one Package from the hardware
-    *
-    * RC_SUCCESS - byte was received
-    * Device specific ErrorCode - in case of error
-    */
+	 * \brief Data to be read from hardware is populated in the
+	 * 		  Ringbuffer passed as parameter.
+	 * @param data - Data to be read from hardware
+	 * @return RC_SUCCESS - byte was received
+	 * 		   RC_NODATA - No data present to recieve
+	 */
     virtual RC_t readPackage_hw(CRingBuffer& data) = 0;
 
 };

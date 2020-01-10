@@ -38,10 +38,13 @@ class CCanPort : public CPort {
 
 public:
 
+	/**
+	 * \brief CAN Port available for creation.
+	 */
     enum port_t{
-    	CAN1,		/**< \brief CAN Port 1 */
-		CAN2, 		/**< \brief CAN Port 2 */
-		NONE,		/**< \brief default value no valid port */
+    	CAN1,		/**< \brief CAN Port 1 */              //!< CAN1
+		CAN2, 		/**< \brief CAN Port 2 */                //!< CAN2
+		NONE,		/**< \brief default value no valid port *///!< NONE
     };
 
 
@@ -51,13 +54,10 @@ public:
      *  Constructor - Will initialize the peripheral port and setup the RX and TX buffers
      *  Please check the hardware limitations to ensure proper configuration parameters
      *
-     *  \param port_t port : NONE			: IN	The hardware port to be used
-     *  \param uint16_t baudrate : 115200	: IN	The baudrate of the device. Check the hardware manual for valid values.
-     *  \param uint8_t bits : 8				: IN	The number of data bits, typically 7 or 8
-     *  \param parity_t parity : NONE		: IN	Parity, ODD, EVEN or NONE
-     *  \param uint8_t stopbits : 1			: IN	Number of Stopbits, 1 or 2
-     *  \param uint16_t bufferSizeRx        : CAN_DEFAULTBUFFERSIZE : IN 	Size of the Receive Buffer
-     *  \param uint16_t bufferSizeTx        : CAN_DEFAULTBUFFERSIZE : IN Size of the Transmit Buffer
+     *  @param port : NONE port_t			: IN	The hardware port to be used
+     *  @param baudrate : 115200 uint16_t	: IN	The baudrate of the device. Check the hardware manual for valid values.
+     *  @param bufferSizeRx uint16_t        : CAN_DEFAULTBUFFERSIZE : IN 	Size of the Receive Buffer
+     *  @param bufferSizeTx uint16_t        : CAN_DEFAULTBUFFERSIZE : IN Size of the Transmit Buffer
      */
     CCanPort(port_t port = NONE,
              uint32_t baudrate = 1000000,
@@ -66,8 +66,8 @@ public:
 			 );
 
 	/**
-	 * Get the size of a package for the peripheral
-	 * \return packagesize in byte
+	 * \brief Get the size of a package for the peripheral
+	 * @return package size in byte
 	 */
 	uint16_t getDriverPackageSize();
 
@@ -78,18 +78,18 @@ private:
 
 	/**
 	 * \brief Sends one Package to the CAN hardware
-	 *
-	 * \return RC_t:
+	 * @param data that has to be written to hardware
+	 * @return RC_t:
 	 * RC_SUCCESS - byte was transmitted via CAN
-	 *
 	 */
 	RC_t writePackage_hw(CRingBuffer& data);
 
 	/**
-	 * \brief Receive one Package from the CAN hardware
-	 *
-	 * RC_SUCCESS - byte was received via CAN
-	 * RC_NODATA - No data present to recieve
+	 * \brief Data to be read from hardware is populated in the
+	 * 		  Ringbuffer passed as parameter.
+	 * @param dataReadFromHw - Data to be read from hardware
+	 * @return RC_SUCCESS - byte was received via CAN
+	 * 		   RC_NODATA - No data present to recieve
 	 */
 	RC_t readPackage_hw(CRingBuffer& dataReadFromHw);
 

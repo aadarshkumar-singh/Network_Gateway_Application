@@ -1,12 +1,12 @@
 /***************************************************************************
-*============= Copyright by Darmstadt University of Applied Sciences =======
-****************************************************************************
-* Filename        : CPORTFACTORY.CPP
-* Author          :
-* Description     :
-*
-*
-****************************************************************************/
+ *============= Copyright by Darmstadt University of Applied Sciences =======
+ ****************************************************************************
+ * Filename        : CPORTFACTORY.CPP
+ * Author          : Aadarsh Kumar Singh
+ * Description     : Source file that defines API to create all types of
+ * 					 ports for communication via the Gateway.
+ *
+ ****************************************************************************/
 
 
 //System Include Files
@@ -47,6 +47,7 @@ CPort* CPortFactory::createCanPort(CCanPort::port_t port,
 	}
 	else
 	{
+		cout <<"Cannot Create More CAN Ports "<<endl;
 		errorHandler.report(CEH_MAXIMUMLIMITOFPORTREACHED);
 		return NULL;
 	}
@@ -71,6 +72,7 @@ CPort* CPortFactory::createUartPort(CUartPort::port_t port,
 	}
 	else
 	{
+		cout <<"Cannot Create More UART Ports "<<endl;
 		errorHandler.report(CEH_MAXIMUMLIMITOFPORTREACHED);
 		return NULL;
 	}

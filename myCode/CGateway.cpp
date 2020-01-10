@@ -1,9 +1,13 @@
-/*
- * CParser.cpp
+/***************************************************************************
+ *============= Copyright by Darmstadt University of Applied Sciences =======
+ ****************************************************************************
+ * Filename        : CGATEWAY.CPP
+ * Author          : Aadarsh Kumar Singh
+ * Description     : Source file that defines API to establish communication
+ * 					 between two ports.
  *
- *  Created on: 01.12.2019
- *      Author: Fromm
- */
+ ****************************************************************************/
+
 
 #include "CGateway.h"
 
@@ -11,7 +15,7 @@
 #include "CPort.h"
 using namespace std;
 
-/**
+/*
  * \brief Vector that stores the address of ports that are opened
  * 		  for establishing gateway communication.
  */
@@ -45,6 +49,7 @@ CGateway::CGateway(CPort *portA, CPort *portB)
 
 	if (portA == NULL || portB == NULL)
 	{
+		cout <<"NULL Address of port found Cannot create Gateway Object"<<endl;
 		errorHandler.report(CEH_INVALIDPOINTER);
 	}
 
@@ -55,9 +60,11 @@ CGateway::CGateway(CPort *portA, CPort *portB)
 		{
 			m_portA = portA;
 			m_portB = portB;
+			cout <<"Gateway Object Created Successfully"<<endl;
 		}
 		else
 		{
+			cout<<"Gateway Object Creation Failed"<<endl;
 			throw flagForValidPorts ;
 		}
 	}

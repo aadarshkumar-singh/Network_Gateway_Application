@@ -37,7 +37,6 @@ public:
 
 	/**
 	 * \brief API to Simulate the gateway
-	 * @param None
 	 */
 	void simulateGateway();
 };

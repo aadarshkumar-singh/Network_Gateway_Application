@@ -33,7 +33,7 @@ CSimulationTestGatewayApp::CSimulationTestGatewayApp()
 
 }
 
-/**
+/*
  * \brief This class defines the API to simulate the testcases of the Gateway
  */
 void CSimulationTestGatewayApp::simulateGateway()

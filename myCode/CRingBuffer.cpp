@@ -1,13 +1,10 @@
-
-
 /***************************************************************************
 *============= Copyright by Darmstadt University of Applied Sciences =======
 ****************************************************************************
 * Filename        : CRINGBUFFER.CPP
-* Author          :
-* Description     :
-*
-*
+* Author          : Aadarsh Kumar Singh
+* Description     : Source file that defines API to create Ringbuffer of
+* 					given size.
 ****************************************************************************/
 
 
@@ -21,6 +18,10 @@ using namespace std;
 
 //Method Implementations
 
+/*
+ * \brief Creates a ring buffer of given size
+ * @param size size of the ringbuffer
+ */
 CRingBuffer::CRingBuffer(uint16_t size)
 {
 	cout << "just created buffer having size " << size << endl;
@@ -35,12 +36,21 @@ CRingBuffer::CRingBuffer(uint16_t size)
 	m_pBuffer = new uint8_t[size];
 }
 
-
+/*
+ * Destructor of the ring buffer
+ */
 CRingBuffer::~CRingBuffer()
 {
 	delete[] m_pBuffer;
 }
 
+/*
+ * \brief API to read the data from the ringbuffer
+ * @param data Data which is read from the buffer is copied into
+ * 			   the parameter
+ * @return RC_SUCCESS : When the data is read successfully.
+ * 		   RC_BUFFERUNDERFLOW : when the data read has failed.
+ */
 RC_t CRingBuffer::read(uint8_t& data)
 {
 	if (m_fillLevel > 0)
@@ -59,6 +69,12 @@ RC_t CRingBuffer::read(uint8_t& data)
 
 }
 
+/*
+ * \brief API to write the data in the ringbuffer.
+ * @param data Data to be written in the ringbuffer
+ * @return ErrorCode : RC_SUCCESS : When Data written successfully.
+ * 					   RC_BUFFERUNDERFLOW : when the data written is failed.
+ */
 RC_t CRingBuffer::write(uint8_t data)
 {
 	if (m_fillLevel < m_size)
@@ -76,6 +92,13 @@ RC_t CRingBuffer::write(uint8_t data)
 	}
 }
 
+/*
+ * \brief Operator Overloading to enable ostream object to print
+ * 		  ringbuffer
+ * @param lhs ostream object to output the Ringbuffer data
+ * @param rhs Ringbuffer to be displayed
+ * @return ostream of Ringbuffer Data
+ */
 ostream& operator <<(ostream &lhs, const CRingBuffer &rhs)
 {
 	for (uint16_t index =0 ; index < rhs.m_size; index++)
@@ -85,6 +108,10 @@ ostream& operator <<(ostream &lhs, const CRingBuffer &rhs)
 	return lhs;
 }
 
+/*
+ * \brief API to clear the Ringbuffer
+ * @return Error Code : RC_SUCCESS : When Cleared the Buffer successfully.
+ */
 RC_t CRingBuffer::clear()
 {
 	m_fillLevel = 0;
@@ -97,11 +124,20 @@ RC_t CRingBuffer::clear()
 	return RC_SUCCESS;
 }
 
+/*
+ * \brief To know the index of the buffer untill which the ringbuffer is
+ * 		  Filled.
+ * @return Fill Level of the buffer
+ */
 uint16_t CRingBuffer::getFillLevelOfBuffer()
 {
 	return m_fillLevel ;
 }
 
+/*
+ * \brief Copy Constructor to provide deep copies
+ * @param copyRingBuffer Ringbuffer from which data is copied.
+ */
 CRingBuffer::CRingBuffer(const CRingBuffer &copyRingBuffer)
 {
 	this->m_fillLevel =copyRingBuffer.m_fillLevel;

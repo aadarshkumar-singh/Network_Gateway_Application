@@ -1,9 +1,12 @@
-/*
- * CParser.h
+/***************************************************************************
+ *============= Copyright by Darmstadt University of Applied Sciences =======
+ ****************************************************************************
+ * Filename        : CGATEWAY.H
+ * Author          : Aadarsh Kumar Singh
+ * Description     : Header file that defines API to establish communication
+ * 					 between two ports.
  *
- *  Created on: 01.12.2019
- *      Author: Fromm
- */
+ ****************************************************************************/
 
 #ifndef CPARSER_H_
 #define CPARSER_H_
@@ -14,6 +17,10 @@
 #include "CentralErrorHandler.h"
 #include <vector>
 #include <algorithm>
+
+/**
+ * \brief Defines API to establish communication between two ports.
+ */
 class CGateway
 {
 private:
@@ -36,7 +43,6 @@ private:
 	 * \brief API to decrement the count of the communication ports
 	 * 		  When the port is not used by the gateway object
 	 *
-	 * @param None
 	 */
 	void resetPorts();
 
@@ -81,6 +87,9 @@ public:
 	 */
 	RC_t transmitFromAToB();
 
+	/**
+	 * Destructor of the Gateway
+	 */
 	virtual ~CGateway();
 };
 

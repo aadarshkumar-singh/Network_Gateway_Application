@@ -2,9 +2,9 @@
  *============= Copyright by Darmstadt University of Applied Sciences =======
  ****************************************************************************
  * Filename        : CPORTFACTORY.H
- * Author          :
- * Description     :
- *
+ * Author          : Aadarsh Kumar Singh
+ * Description     : Header file that defines API to create all types of
+ * 					 ports for communication via the Gateway.
  *
  ****************************************************************************/
 
@@ -59,6 +59,9 @@ public:
 	 * \brief Create UART port
 	 * @param port : The type of UART port
 	 * @param baudrate : The baudrate of the device. Check the hardware manual for valid values.
+	 * @param bits : 8 uint8_t				: IN	The number of data bits, typically 7 or 8
+	 * @param parity : NONE parity_t		: IN	Parity, ODD, EVEN or NONE
+	 * @param stopbits : 1 uint8_t			: IN	Number of Stopbits, 1 or 2
 	 * @param bufferSizeRx : Size of the Receive Buffer
 	 * @param bufferSizeTx : Size of the Transmit buffer
 	 * @return CPort * : Returns a pointer of UART communication
@@ -74,8 +77,9 @@ public:
 
 	/**
 	 * \brief Will create a port using the default configuration of the port (i.e. the default parameters set above)
-	 * \param : port_t : UART : To create UART port
+	 * @param port : UART : To create UART port
 	 * 					 CAN  : To create CAN port
+	 * @return CPort* address of the port that has been created.
 	 */
 	static CPort* createPort(port_t port);
 
