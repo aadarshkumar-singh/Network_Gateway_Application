@@ -14,3 +14,7 @@ The implementation shall be generic, i.e. any combination (set during runtime) o
   * UART to UART
   * CAN to CAN
   * Any new additional port
+
+## UML Diagram
+
+![UML](uml/clNetwork_Gateway_Factory.png)
